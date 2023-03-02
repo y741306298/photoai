@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片增强</title>
+    <link type="text/css" rel="stylesheet" href="../../static/enhancement.css">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+<div class="image-enhancement">输入图像：
+    <input type="file" name="myfile" id="i1" accept="image/*" class="btn btn-primary">
+    <button id="d1" class="btn btn-success">提交~</button>
+    <button id="d2" class="btn btn-success">测试~</button>
+</div>
+<script>
+    $(function () {
+        $('#d1').click(function () {
+            var formdata = new FormData();
+            formdata.append('file', $('#i1')[0].files[0]);
+            console.log("aaaa=====",formdata)
+            $.ajax({
+                url: '{% url "test" %}', // 这里是在django的urls中配置的反向解析路由，可以通过name='test' 访问test这个指向的路由
+                type: 'post',
+                data: formdata,
+                // ajax发送文件需要修改两个固定的参数
+                processData: false,  // 告诉浏览器不要处理我的数据
+                contentType: false,  // 不要用任何的编码，就用我formdata自带的编码格式，django能够自动识别改formdata对象
+                // 回调函数
+                success: function (data) {
+                    console.log("aaaa=====",data)
+                    alert(data)
+                }
+            })
+        })
+    })
+
+    $(function () {
+        $('#d2').click(function () {
+            $.ajax({
+                url: '{% url "enhancementStart" %}', // 这里是在django的urls中配置的反向解析路由，可以通过name='test' 访问test这个指向的路由
+                type: 'post',
+                data: '',
+                // ajax发送文件需要修改两个固定的参数
+                processData: false,  // 告诉浏览器不要处理我的数据
+                contentType: false,  // 不要用任何的编码，就用我formdata自带的编码格式，django能够自动识别改formdata对象
+                // 回调函数
+                success: function (data) {
+                    console.log("aaaa=====",data)
+                    alert(data)
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
