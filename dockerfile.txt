@@ -1,0 +1,18 @@
+# 基于的基础镜像
+FROM python:3.10.8
+
+# 设置app文件夹是工作目录
+WORKDIR /
+
+# 先将依赖文件拷贝到项目中
+COPY requirements.txt /
+
+# 执行指令，安装依赖
+RUN pip install -r requirements.txt
+
+# 拷贝当前目录的项目文件和代码
+COPY . /
+
+# 执行命令
+CMD [ "python manage.py runserver" ]
+
